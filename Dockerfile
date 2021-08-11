@@ -11,4 +11,6 @@ COPY . .
 
 ENV PORT 5000
 
+EXPOSE $PORT
+
 CMD [ "python3", "server.py"]
