@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-deployment
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      {{- with .Values.imagePullSecretName }}
+      imagePullSecrets:
+        - name: {{ . | quote }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}-app
+          image: {{ .Values.imageName }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          env:
+            - name: LDAP_SERVER
+              value: "{{ .Values.config.ldapServer }}"
+            - name: LDAP_BINDDN
+              value: "{{ .Values.config.ldapBindDN }}"
+            - name: LDAP_BINDPW
+              value: "{{ .Values.config.ldapBindPW }}"
+            - name: LDAP_PORT
+              value: "{{ .Values.config.ldapPort }}"
+            - name: LDAP_TLS
+              value: "{{ .Values.config.ldapTLS }}"
+            - name: LDAP_SSL
+              value: "{{ .Values.config.ldapSSL }}"
+            - name: LDAP_SEARCH_BASE
+              value: "{{ .Values.config.ldapSearchBase }}"
+            - name: PORT
+              value: "80"
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          #livenessProbe:
+          #  httpGet:
+          #    path: /
+          #    port: http
+          #readinessProbe:
+          #  httpGet:
+          #    path: /
+          #    port: http
