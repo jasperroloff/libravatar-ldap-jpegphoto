@@ -1,0 +1,7 @@
+flask
+flask-ldapconn
+Pillow
+urllib3
+Flask-APScheduler
+python-dotenv
+waitress
