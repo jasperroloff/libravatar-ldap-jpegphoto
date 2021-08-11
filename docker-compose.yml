@@ -7,12 +7,12 @@ services:
     #env_file:
     #  - .env
     environment:
-      LDAP_SERVER: ipa.example.org
-      LDAP_BINDDN: uid=libravatar-ldap,cn=sysaccounts,cn=etc,dc=example,dc=org
-      LDAP_BINDPW: Secret1234
+      LDAP_SERVER: "ipa.example.org"
+      LDAP_BINDDN: "uid=libravatar-ldap,cn=sysaccounts,cn=etc,dc=example,dc=org"
+      LDAP_BINDPW: "Secret1234"
       LDAP_PORT: 636
-      LDAP_TLS: False
-      LDAP_SSL: True
-      LDAP_SEARCH_BASE: cn=users,cn=accounts,dc=example,dc=org
+      LDAP_TLS: "False"
+      LDAP_SSL: "True"
+      LDAP_SEARCH_BASE: "cn=users,cn=accounts,dc=example,dc=org"
     ports:
       - "8080:5000"
