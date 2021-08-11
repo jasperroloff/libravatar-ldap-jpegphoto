@@ -26,6 +26,7 @@ class Config:
     FORCE_ATTRIBUTE_VALUE_AS_LIST = True
     CALCULATE_HASHES_DELAY = int(os.environ.get('CALCULATE_HASHES_DELAY', default=600))
     SCHEDULER_API_ENABLED = True
+    MAX_SIZE = 2048
 
 
 ldap = LDAPConn()
@@ -71,8 +72,8 @@ def create_app():
             size = 80
         elif s < 1:
             size = 80
-        elif s > 512:
-            size = 512
+        elif s > Config.MAX_SIZE:
+            size = Config.MAX_SIZE
         else:
             size = s
 
