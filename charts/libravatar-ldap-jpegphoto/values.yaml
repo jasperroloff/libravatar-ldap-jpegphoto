@@ -13,7 +13,7 @@ config:
   ldapTLS: "True"
   ldapSSL: "False"
 
-imageName: jasperroloff/libravatar-ldap-jpegphoto
+imageName: jasperroloff/libravatar-ldap-jpegphoto:latest
 imagePullPolicy: Always
 
 # The pull secret has to exist within the namespace!
