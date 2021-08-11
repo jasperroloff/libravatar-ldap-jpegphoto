@@ -93,15 +93,16 @@ def create_app():
             user: User = User.query.filter("mail:{}".format(mail)).first()
             if user and len(user.photo) > 0:
                 photo = user.photo[0]
-                pil_photo: Image.Image = Image.open(io.BytesIO(photo))
-                pil_photo = make_square(pil_photo)
-                pil_photo = pil_photo.resize((size, size), Image.ANTIALIAS)
-                photo_new = io.BytesIO()
-                pil_photo.save(photo_new, format='PNG')
-                # TODO: store photo in cache
-                response = make_response(photo_new.getvalue())
-                response.headers.set('Content-Type', 'image/png')
-                return response
+                if photo and len(photo) > 0:
+                    pil_photo: Image.Image = Image.open(io.BytesIO(photo))
+                    pil_photo = make_square(pil_photo)
+                    pil_photo = pil_photo.resize((size, size), Image.ANTIALIAS)
+                    photo_new = io.BytesIO()
+                    pil_photo.save(photo_new, format='PNG')
+                    # TODO: store photo in cache
+                    response = make_response(photo_new.getvalue())
+                    response.headers.set('Content-Type', 'image/png')
+                    return response
 
         # if no image was found, but a default action is given
         if d == '404':
