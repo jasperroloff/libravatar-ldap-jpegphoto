@@ -107,7 +107,7 @@ def create_app():
                 if photo and len(photo) > 0:
                     pil_photo: Image.Image = Image.open(io.BytesIO(photo))
                     pil_photo = make_square(pil_photo)
-                    pil_photo = pil_photo.resize((size, size), Image.ANTIALIAS)
+                    pil_photo = pil_photo.resize((size, size))
                     photo_new = io.BytesIO()
                     pil_photo.save(photo_new, format='PNG')
                     # TODO: store photo in cache
@@ -155,7 +155,7 @@ def create_app():
                     email_sha256 = hashlib.sha256(email.encode('ascii')).hexdigest()
 
                     mail_hashes_md5[email_md5] = email
-                    mail_hashes_md5[email_sha256] = email
+                    mail_hashes_sha256[email_sha256] = email
 
     calculate_hashes()
     scheduler.start()
