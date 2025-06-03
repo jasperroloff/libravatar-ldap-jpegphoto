@@ -2,8 +2,7 @@ import hashlib
 import ssl
 import io
 import os
-import distutils.util
-import urllib3.request
+import urllib.parse
 from typing import List
 from PIL import Image
 
@@ -12,13 +11,22 @@ from flask_ldapconn import LDAPConn
 from flask_apscheduler import APScheduler
 
 
+def strtobool(str_in: str) -> bool:
+    if str_in.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif str_in.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise Exception('Invalid boolean value')
+
+
 class Config:
     LDAP_SERVER = os.environ.get('LDAP_SERVER')
     LDAP_PORT = int(os.environ.get('LDAP_PORT', default=389))
     LDAP_BINDDN = os.environ.get('LDAP_BINDDN', default=None)
     LDAP_SECRET = os.environ.get('LDAP_BINDPW', default=None)
-    LDAP_USE_SSL = bool(distutils.util.strtobool(os.environ.get('LDAP_SSL', default='False')))
-    LDAP_USE_TLS = bool(distutils.util.strtobool(os.environ.get('LDAP_TLS', default='True')))
+    LDAP_USE_SSL = strtobool(os.environ.get('LDAP_SSL', default='False'))
+    LDAP_USE_TLS = strtobool(os.environ.get('LDAP_TLS', default='True'))
     LDAP_SEARCH_BASE = os.environ.get('LDAP_SEARCH_BASE')
     LDAP_CONNECT_TIMEOUT = 10  # Honored when the TCP connection is being established
     LDAP_READ_ONLY = True
@@ -118,7 +126,7 @@ def create_app():
 
         url = "https://cdn.libravatar.org/avatar/{}".format(mail_hash)
 
-        params = urllib3.request.urlencode(param_dict)
+        params = urllib.parse.urlencode(param_dict)
         if params:
             url += "?{}".format(params)
 
