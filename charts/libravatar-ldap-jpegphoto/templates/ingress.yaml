@@ -9,7 +9,7 @@ metadata:
   {{- end }}
 spec:
   {{- with .Values.ingress.ingressClassName }}
-  ingressClassName: {{ . }
+  ingressClassName: {{ . }}
   {{- end }}
   {{- if .Values.ingress.tls }}
   tls:
