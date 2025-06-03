@@ -4,3 +4,4 @@ Pillow
 Flask-APScheduler
 python-dotenv
 waitress
+certifi

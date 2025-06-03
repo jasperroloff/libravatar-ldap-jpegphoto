@@ -4,6 +4,8 @@ import io
 import os
 import urllib.parse
 from typing import List
+
+import certifi
 from PIL import Image
 
 from flask import Flask, make_response, abort, redirect, request
@@ -31,6 +33,7 @@ class Config:
     LDAP_CONNECT_TIMEOUT = 10  # Honored when the TCP connection is being established
     LDAP_READ_ONLY = True
     LDAP_TLS_VERSION = ssl.PROTOCOL_TLSv1_2
+    LDAP_CA_CERTS_FILE = certifi.where()
     FORCE_ATTRIBUTE_VALUE_AS_LIST = True
     CALCULATE_HASHES_DELAY = int(os.environ.get('CALCULATE_HASHES_DELAY', default=600))
     SCHEDULER_API_ENABLED = True
