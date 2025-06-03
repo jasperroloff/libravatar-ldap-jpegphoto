@@ -113,6 +113,7 @@ def create_app():
                     # TODO: store photo in cache
                     response = make_response(photo_new.getvalue())
                     response.headers.set('Content-Type', 'image/png')
+                    response.headers.set('Cache-Control', 'max-age=3600')
                     return response
 
         # if no image was found, but a default action is given
