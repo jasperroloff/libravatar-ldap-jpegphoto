@@ -4,14 +4,19 @@
 
 replicaCount: 1
 
-config:
-  ldapServer: ""
-  ldapBindDN: ""
-  ldapBindPW: ""
-  ldapSearchBase: ""
-  ldapPort: "389"
-  ldapTLS: "True"
-  ldapSSL: "False"
+ldapSecret:
+  # create secret (with data below) or use existing one
+  create: true
+  name: {{ .Release.Name }}-ldap-config
+  # data for secret creation
+  stringData:
+    server: ""
+    bindDn: ""
+    bindPw: ""
+    searchBase: ""
+    port: "389"
+    tls: "True"
+    ssl: "False"
 
 imageName: ghcr.io/jasperroloff/libravatar-ldap-jpegphoto:latest
 imagePullPolicy: Always

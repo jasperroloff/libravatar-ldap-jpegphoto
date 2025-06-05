@@ -1,42 +1,63 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Chart.Name }}-deployment
+  name: {{ .Release.Name }}-deployment
   labels:
-    app: {{ .Chart.Name }}
+    app: {{ .Release.Name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Chart.Name }}
+      app: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ .Chart.Name }}
+        app: {{ .Release.Name }}
     spec:
       {{- with .Values.imagePullSecretName }}
       imagePullSecrets:
         - name: {{ . | quote }}
       {{- end }}
       containers:
-        - name: {{ .Chart.Name }}-app
+        - name: {{ .Release.Name }}-app
           image: {{ .Values.imageName }}
           imagePullPolicy: {{ .Values.imagePullPolicy }}
           env:
             - name: LDAP_SERVER
-              value: "{{ .Values.config.ldapServer }}"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.ldapSecret.name }}
+                  key: "server"
             - name: LDAP_BINDDN
-              value: "{{ .Values.config.ldapBindDN }}"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.ldapSecret.name }}
+                  key: "bindDn"
             - name: LDAP_BINDPW
-              value: "{{ .Values.config.ldapBindPW }}"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.ldapSecret.name }}
+                  key: "bindPw"
             - name: LDAP_PORT
-              value: "{{ .Values.config.ldapPort }}"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.ldapSecret.name }}
+                  key: "port"
             - name: LDAP_TLS
-              value: "{{ .Values.config.ldapTLS }}"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.ldapSecret.name }}
+                  key: "tls"
             - name: LDAP_SSL
-              value: "{{ .Values.config.ldapSSL }}"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.ldapSecret.name }}
+                  key: "ssl"
             - name: LDAP_SEARCH_BASE
-              value: "{{ .Values.config.ldapSearchBase }}"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.ldapSecret.name }}
+                  key: "searchBase"
             - name: PORT
               value: "80"
           ports:
