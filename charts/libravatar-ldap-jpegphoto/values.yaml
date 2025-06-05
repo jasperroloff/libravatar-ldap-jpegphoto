@@ -7,7 +7,8 @@ replicaCount: 1
 ldapSecret:
   # create secret (with data below) or use existing one
   create: true
-  name: {{ .Release.Name }}-ldap-config
+  # default name: RELEASE-ldap-config
+  name: ""
   # data for secret creation
   stringData:
     server: ""

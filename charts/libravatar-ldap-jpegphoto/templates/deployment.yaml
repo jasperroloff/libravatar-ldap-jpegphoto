@@ -26,37 +26,37 @@ spec:
             - name: LDAP_SERVER
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.ldapSecret.name }}
+                  name: {{ .Values.ldapSecret.name | default (printf "%s-ldap-config" .Release.Name) }}
                   key: "server"
             - name: LDAP_BINDDN
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.ldapSecret.name }}
+                  name: {{ .Values.ldapSecret.name | default (printf "%s-ldap-config" .Release.Name) }}
                   key: "bindDn"
             - name: LDAP_BINDPW
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.ldapSecret.name }}
+                  name: {{ .Values.ldapSecret.name | default (printf "%s-ldap-config" .Release.Name) }}
                   key: "bindPw"
             - name: LDAP_PORT
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.ldapSecret.name }}
+                  name: {{ .Values.ldapSecret.name | default (printf "%s-ldap-config" .Release.Name) }}
                   key: "port"
             - name: LDAP_TLS
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.ldapSecret.name }}
+                  name: {{ .Values.ldapSecret.name | default (printf "%s-ldap-config" .Release.Name) }}
                   key: "tls"
             - name: LDAP_SSL
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.ldapSecret.name }}
+                  name: {{ .Values.ldapSecret.name | default (printf "%s-ldap-config" .Release.Name) }}
                   key: "ssl"
             - name: LDAP_SEARCH_BASE
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.ldapSecret.name }}
+                  name: {{ .Values.ldapSecret.name | default (printf "%s-ldap-config" .Release.Name) }}
                   key: "searchBase"
             - name: PORT
               value: "80"
