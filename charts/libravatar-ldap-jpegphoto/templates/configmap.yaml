@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-ldap-ca-crt
-spec:
+data:
   ca.crt: |
     {{- .Values.ldapCaCert | nindent 4 }}
 {{- end }}
