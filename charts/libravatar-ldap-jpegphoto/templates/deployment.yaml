@@ -60,6 +60,10 @@ spec:
                   key: "searchBase"
             - name: PORT
               value: "80"
+            {{- if .Values.ldapCaCert }}
+            - name: LDAP_CA_CERTS_FILE
+              value: "/ca.crt"
+            {{- end }}
           ports:
             - name: http
               containerPort: 80
@@ -72,3 +76,16 @@ spec:
           #  httpGet:
           #    path: /
           #    port: http
+          {{- if .Values.ldapCaCert }}
+          volumeMounts:
+            - mountPath: /ca.crt
+              name: ldap-ca-crt
+              subPath: ca.crt
+              readonly: true
+          {{- end }}
+      {{- if .Values.ldapCaCert }}
+      volumes:
+        - name: ldap-ca-crt
+          configMap:
+            name: {{ .Release.Name }}-ldap-ca-crt
+      {{- end }}

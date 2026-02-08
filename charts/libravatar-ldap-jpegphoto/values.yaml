@@ -19,6 +19,9 @@ ldapSecret:
     tls: "True"
     ssl: "False"
 
+# PEM formatted CA cert for LDAP client (multiline string)
+ldapCaCert:
+
 imageName: ghcr.io/jasperroloff/libravatar-ldap-jpegphoto:latest
 imagePullPolicy: Always
 
